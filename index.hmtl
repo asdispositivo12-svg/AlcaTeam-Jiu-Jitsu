@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlcaTeam Jiu-Jitsu</title>
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Estilos do carrossel igual ao Aluga.ae */
+        .scroll-container {
+            scrollbar-width: thin;
+            scrollbar-color: #00bcd4 #1a1a1a;
+            display: flex;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-snap-type: x proximity;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scroll-container::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: #00bcd4;
+            border-radius: 10px;
+        }
+
+        .modality-card {
+            flex: 0 0 auto;
+            width: 320px;
+            margin-right: 20px;
+        }
+
+        .instructor-card {
+            flex: 0 0 auto;
+            width: 100%;
+            max-width: 400px;
+            margin-right: 20px;
+        }
+
+        @media (max-width: 767px) {
+            .scroll-container {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 20px;
+                scroll-padding: 0 20px;
+            }
+            
+            .modality-card {
+                scroll-snap-align: start;
+                min-width: 85%;
+                margin-right: 15px;
+            }
+            
+            .modality-card:last-child {
+                margin-right: 0;
+            }
+            
+            .instructor-card {
+                scroll-snap-align: start;
+                min-width: 85%;
+                margin-right: 15px;
+            }
+            
+            .instructor-card:last-child {
+                margin-right: 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .scroll-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                overflow-x: visible;
+            }
+            
+            .modality-card {
+                width: 100%;
+                margin-right: 0;
+            }
+            
+            .instructor-card {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] text-white">
+    <!-- Header (mantido igual) -->
+    <header class="fixed top-0 w-full bg-[#0a0a0a]/95 backdrop-blur-sm z-50 border-b border-[#00bcd4]/20">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433543301427888231/Screenshot_9.png.png?ex=690512bd&is=6903c13d&hm=ba663c6f660468c8c777f819e80b4b45a7543b3a06fbfaecc5716d9d971ddd21&" alt="AlcaTeam" class="h-16 w-16">
+                    <span class="text-2xl font-bold text-[#00bcd4]">ALCATEAM JIU-JITSU</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-300 hover:text-[#00bcd4] transition">Home</a>
+                    <a href="#about" class="text-gray-300 hover:text-[#00bcd4] transition">Nossa História</a>
+                    <a href="#modalities" class="text-gray-300 hover:text-[#00bcd4] transition">Modalidades</a>
+                    <a href="#instructors" class="text-gray-300 hover:text-[#00bcd4] transition">Instrutores</a>
+                </div>
+                <div class="md:hidden fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+                    <div class="bg-[#00bcd4] rounded-full p-4 shadow-lg">
+                        <button id="mobile-menu-button" class="text-black">
+                            <i data-lucide="menu" size="28"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden fixed bottom-20 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm bg-[#1a1a1a] rounded-2xl shadow-2xl z-40 p-6 hidden border border-[#00bcd4]/20">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="flex items-center gap-3 p-4 rounded-xl hover:bg-[#00bcd4]/10 transition">
+                        <i data-lucide="home" class="text-[#00bcd4]"></i>
+                        <span class="text-lg font-medium">Home</span>
+                    </a>
+                    <a href="#about" class="flex items-center gap-3 p-4 rounded-xl hover:bg-[#00bcd4]/10 transition">
+                        <i data-lucide="book" class="text-[#00bcd4]"></i>
+                        <span class="text-lg font-medium">Nossa História</span>
+                    </a>
+                    <a href="#modalities" class="flex items-center gap-3 p-4 rounded-xl hover:bg-[#00bcd4]/10 transition">
+                        <i data-lucide="shield" class="text-[#00bcd4]"></i>
+                        <span class="text-lg font-medium">Modalidades</span>
+                    </a>
+                    <a href="#instructors" class="flex items-center gap-3 p-4 rounded-xl hover:bg-[#00bcd4]/10 transition">
+                        <i data-lucide="users" class="text-[#00bcd4]"></i>
+                        <span class="text-lg font-medium">Instrutores</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section (mantido igual) -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#1a1a1a] to-[#0a0a0a]">
+            <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433557865439826050/Gemini_Generated_Image_vpb6s2vpb6s2vpb6.png?ex=6905204d&is=6903cecd&hm=278ed6d52d6c3ca311a8ea5904799b7e7af63d4e59e5c83162cfc6faffa74676&" alt="Jiu-Jitsu Background" class="w-full h-full object-cover opacity-20">
+        </div>
+
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-[#00bcd4] rounded-full filter blur-[100px]"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-[#00bcd4] rounded-full filter blur-[120px]"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    <span class="bg-gradient-to-r from-[#00bcd4] to-[#0097a7] bg-clip-text text-transparent">
+                        ALCATEAM JIU JITSU
+                    </span>
+                </h1>
+
+                <p class="text-xl md:text-2xl text-gray-300 mb-8">
+                    O Tatame nos Une, a Fraternidade nos Fortalece
+                </p>
+                <p class="text-lg text-gray-400 mb-12 max-w-2xl">
+                    Conheça nossas unidades pelo mundo e faça parte de uma equipe que transforma vidas através do Jiu-Jitsu
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a
+                        href="#contact"
+                        class="group bg-[#00bcd4] text-black px-8 py-4 rounded-full hover:bg-[#00acc1] transition font-bold text-lg flex items-center gap-2 w-full sm:w-auto justify-center"
+                    >
+                        Agende uma Aula Introdutória
+                        <i data-lucide="arrow-right" class="group-hover:translate-x-1 transition"></i>
+                    </a>
+
+                    <a
+                        href="#about"
+                        class="border-2 border-[#00bcd4] text-[#00bcd4] px-8 py-4 rounded-full hover:bg-[#00bcd4] hover:text-black transition font-bold text-lg w-full sm:w-auto text-center"
+                    >
+                        Saiba Mais
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section (mantido igual) -->
+    <section class="py-20 bg-[#0f0f0f]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <div class="h-px w-20 bg-[#00bcd4]"></div>
+                    <span class="text-[#00bcd4] font-semibold">Por que escolher a AlcaTeam Jiu-Jitsu?</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-center">
+                    DESCUBRA POR QUE A <span class="text-[#00bcd4]">ALCATEAM</span> É A MELHOR ESCOLHA
+                </h2>
+                <p class="text-gray-400 max-w-3xl mx-auto text-center">
+                    O Jiu Jitsu transforma vidas e, na AlcaTeam, queremos ser parte dessa jornada. Para resultados extraordinários, é preciso sair da zona de conforto e se desafiar.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div class="group bg-[#1a1a1a] p-8 rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 text-center">
+                    <div class="bg-[#00bcd4]/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-[#00bcd4]/20 transition">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1042/1042339.png" class="w-8 h-8 object-contain" alt="Personalized">
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 group-hover:text-[#00bcd4] transition">
+                        Atendimento Personalizado
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Atendimento personalizado, focado no seu progresso e nas suas necessidades.
+                    </p>
+                </div>
+
+                <div class="group bg-[#1a1a1a] p-8 rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 text-center">
+                    <div class="bg-[#00bcd4]/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-[#00bcd4]/20 transition">
+                        <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" class="w-8 h-8 object-contain" alt="Locations">
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 group-hover:text-[#00bcd4] transition">
+                        Múltiplas Unidades
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Com diversas unidades, você treina com qualidade perto de onde mora.
+                    </p>
+                </div>
+
+                <div class="group bg-[#1a1a1a] p-8 rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 text-center">
+                    <div class="bg-[#00bcd4]/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-[#00bcd4]/20 transition">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2936/2936886.png" class="w-8 h-8 object-contain" alt="Qualified">
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 group-hover:text-[#00bcd4] transition">
+                        Equipe Qualificada
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Instrutores experientes e dedicados, garantindo seu melhor desempenho.
+                    </p>
+                </div>
+
+                <div class="group bg-[#1a1a1a] p-8 rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 text-center">
+                    <div class="bg-[#00bcd4]/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:bg-[#00bcd4]/20 transition">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1076/1076335.png" class="w-8 h-8 object-contain" alt="Friendly">
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 group-hover:text-[#00bcd4] transition">
+                        Ambiente Aconchegante
+                    </h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Um ambiente de amizade e união, onde todos crescem juntos como uma tribo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (mantido igual) -->
+    <section id="about" class="py-20 bg-[#0a0a0a]">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-[#00bcd4]/5 rounded-3xl blur-3xl"></div>
+                    <div class="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] p-8 rounded-3xl border border-[#2a2a2a]">
+                        <div class="aspect-[3/4] bg-[#2a2a2a] rounded-2xl flex items-center justify-center overflow-hidden">
+                            <img
+                                src="https://media.discordapp.net/attachments/1398335670178545847/1433874630355062936/Sabado_de_treino_especifico_-_-_luanabrrz.jpg?ex=6906474f&is=6904f5cf&hm=cb18e238b33de7e2398559183381c3ee4623c485f85d35c2e0bfb8da97cccac5&=&format=webp&width=424&height=563"
+                                alt="AlcaTeam Mission"
+                                class="w-full h-full object-cover"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-center lg:text-left">
+                            NOSSA <span class="text-[#00bcd4]">MISSÃO</span>
+                        </h2>
+                        <p class="text-gray-400 text-lg leading-relaxed">
+                            Promovemos treinamentos seguros e eficazes em artes marciais para homens, mulheres e crianças, com foco no desenvolvimento físico, mental e na conquista de uma vida mais saudável através do esporte. Nossa missão é formar atletas completos e cidadãos conscientes através dos valores do Jiu-Jitsu.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-[#1a1a1a] p-6 rounded-xl border border-[#2a2a2a] hover:border-[#00bcd4] transition text-center">
+                            <i data-lucide="target" class="text-[#00bcd4] mb-4 mx-auto"></i>
+                            <h3 class="text-xl font-bold mb-2">Nosso Objetivo</h3>
+                            <p class="text-gray-400 text-sm">
+                                Formar atletas completos, desenvolver cidadãos conscientes e fortalecer a comunidade do Jiu-Jitsu.
+                            </p>
+                        </div>
+
+                        <div class="bg-[#1a1a1a] p-6 rounded-xl border border-[#2a2a2a] hover:border-[#00bcd4] transition text-center">
+                            <i data-lucide="eye" class="text-[#00bcd4] mb-4 mx-auto"></i>
+                            <h3 class="text-xl font-bold mb-2">Nossa Visão</h3>
+                            <p class="text-gray-400 text-sm">
+                                Ser referência em excelência técnica e formar uma família unida pela arte suave.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pt-4 text-center">
+                        <a
+                            href="#contact"
+                            class="inline-flex items-center gap-2 bg-[#00bcd4] text-black px-8 py-4 rounded-full hover:bg-[#00acc1] transition font-bold"
+                        >
+                            Faça Parte da Nossa História
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modalities Section - COM CARROSSEL ATUALIZADO -->
+    <section id="modalities" class="py-20 bg-[#0f0f0f]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-center">
+                    EXPLORE NOSSAS <span class="text-[#00bcd4]">MODALIDADES</span>
+                </h2>
+                <p class="text-gray-400 max-w-3xl mx-auto text-center">
+                    Desde a primeira experiência no tatame até a evolução para níveis avançados, temos modalidades de Jiu Jitsu para todas as idades e objetivos.
+                </p>
+            </div>
+
+            <div class="relative">
+                <div class="scroll-container">
+                    <!-- Card 1 - Jiu Jitsu Feminino -->
+                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 modality-card">
+                        <div class="absolute inset-0 overflow-hidden">
+                            <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433891652715544716/dsad.png?ex=6906572a&is=690505aa&hm=53da2a40c46ec5741832900ea0917900a78057a29ba563600c9c90e8bf616a65&" alt="Jiu Jitsu Feminino" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                        <div class="p-6 absolute bottom-0 left-0 right-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">Jiu Jitsu Feminino</span>
+                            <h3 class="text-xl font-bold mb-2">Jiu Jitsu Para Mulheres</h3>
+                            <p class="text-gray-300 mb-4 text-sm">Treinamento focado na autoconfiança e defesa pessoal</p>
+                            <a href="#contact" class="inline-flex items-center text-[#00bcd4] font-semibold text-sm hover:gap-2 transition-all">
+                                Saiba Mais <span class="ml-1 group-hover:ml-2 transition-all">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 - Defesa Pessoal -->
+                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 modality-card">
+                        <div class="absolute inset-0 overflow-hidden">
+                            <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433891805526495283/Test.png?ex=6906574e&is=690505ce&hm=39c66f484f38aa5e764c7fbafc93948c2ef78c7b62944062514d47fadab3cde2&" alt="Defesa Pessoal" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                        <div class="p-6 absolute bottom-0 left-0 right-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">Defesa Pessoal</span>
+                            <h3 class="text-xl font-bold mb-2">Jiu Jitsu Defesa</h3>
+                            <p class="text-gray-300 mb-4 text-sm">Técnicas de defesa pessoal especialmente para mulheres</p>
+                            <a href="#contact" class="inline-flex items-center text-[#00bcd4] font-semibold text-sm hover:gap-2 transition-all">
+                                Saiba Mais <span class="ml-1 group-hover:ml-2 transition-all">→</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 - Jiu Jitsu Kids -->
+                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 modality-card">
+                        <div class="absolute inset-0 overflow-hidden">
+                            <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433892024012247081/Kids.png?ex=69065782&is=69050602&hm=dc4dc95e8023b8705c7acd0d42ffba04383636e4c1a44d7c84f5159db8edecd1&" alt="Jiu Jitsu Kids" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
+                        <div class="p-6 absolute bottom-0 left-0 right-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">Jiu Jitsu Kids</span>
+                            <h3 class="text-xl font-bold mb-2">Para Crianças</h3>
+                            <p class="text-gray-300 mb-4 text-sm">Aulas divertidas e educativas para crianças</p>
+                            <a href="#contact" class="inline-flex items-center text-[#00bcd4] font-semibold text-sm hover:gap-2 transition-all">
+                                Saiba Mais <span class="ml-1 group-hover:ml-2 transition-all">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructors Section - COM CARROSSEL ATUALIZADO -->
+    <section id="instructors" class="py-20 bg-[#0a0a0a]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-center">
+                    NOSSOS <span class="text-[#00bcd4]">INSTRUTORES</span>
+                </h2>
+                <p class="text-gray-400 max-w-3xl mx-auto text-center">
+                    Conheça os profissionais altamente qualificados que vão guiar sua jornada no Jiu-Jitsu
+                </p>
+            </div>
+
+            <div class="relative">
+                <div class="scroll-container">
+                    <!-- Muribeca -->
+                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 instructor-card">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img
+                                src="https://cdn.discordapp.com/attachments/1398335670178545847/1433892280875352104/Professor_Muribeca.jpeg?ex=690657c0&is=69050640&hm=b0132bae351618b593ad7d455657e3d4c5642b9423e6974558a644f93b95178b&"
+                                alt="CT Muribeca"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            >
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">
+                                CT Muribeca
+                            </span>
+                            <h3 class="text-2xl font-bold mb-2">
+                                Professor Hugo
+                            </h3>
+                            <p class="text-gray-300 text-sm">Faixa Roxa 3° Grau</p>
+                            <div class="h-1 w-16 bg-[#00bcd4] rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- Olinda -->
+                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 instructor-card">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img
+                                src="https://cdn.discordapp.com/attachments/1398335670178545847/1433893212371554455/Rodrigo.jfif?ex=6906589e&is=6905071e&hm=24f950f8b766c075e82f528b6df0388bb18907912a2c8fc0c5caabe721848339&"
+                                alt="CT Olinda"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            >
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">
+                                CT Olinda
+                            </span>
+                            <h3 class="text-2xl font-bold mb-2">
+                                Professor Rodrigo
+                            </h3>
+                            <p class="text-gray-300 text-sm">Faixa Preta</p>
+                            <div class="h-1 w-16 bg-[#00bcd4] rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- Prazeres -->
+                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 instructor-card">
+                        <div class="aspect-[3/4] overflow-hidden">
+                            <img
+                                src="https://cdn.discordapp.com/attachments/1398335670178545847/1433892539307655178/Professor_Prazeres.jfif?ex=690657fd&is=6905067d&hm=6f00f836c6181ff2ba044d862649770c06c12bdba4c5cbd4b245d709c72d791a&"
+                                alt="CT Prazeres"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            >
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">
+                                CT Prazeres
+                            </span>
+                            <h3 class="text-2xl font-bold mb-2">
+                                Professor Junior
+                            </h3>
+                            <p class="text-gray-300 text-sm">Faixa Preta</p>
+                            <div class="h-1 w-16 bg-[#00bcd4] rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center">
+                <div class="bg-gradient-to-r from-[#1a1a1a] via-[#00bcd4]/10 to-[#1a1a1a] p-8 rounded-2xl border border-[#2a2a2a]">
+                    <h3 class="text-2xl font-bold mb-4">Nossas Unidades</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-400">
+                        <div class="p-4 border border-[#2a2a2a] rounded-lg hover:border-[#00bcd4] transition text-center">
+                            <i data-lucide="map-pin" class="text-[#00bcd4] mb-2 mx-auto"></i>
+                            <h4 class="font-bold text-white">CT Muribeca</h4>
+                            <p class="text-sm">Rua Três, Muribeca, Jaboatão dos Guararapes - PE - CEP 54350040</p>
+                        </div>
+                        <div class="p-4 border border-[#2a2a2a] rounded-lg hover:border-[#00bcd4] transition text-center">
+                            <i data-lucide="map-pin" class="text-[#00bcd4] mb-2 mx-auto"></i>
+                            <h4 class="font-bold text-white">CT Olinda</h4>
+                            <p class="text-sm">Av. Carlos de Lima Cavalcante, 4258 - Rio Doce, Olinda - PE, 53040-125</p>
+                        </div>
+                        <div class="p-4 border border-[#2a2a2a] rounded-lg hover:border-[#00bcd4] transition text-center">
+                            <i data-lucide="map-pin" class="text-[#00bcd4] mb-2 mx-auto"></i>
+                            <h4 class="font-bold text-white">CT Prazeres</h4>
+                            <p class="text-sm">R. da Prata, 529 - Guararapes, Jaboatão dos Guararapes - PE, 54330-265</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section (mantido igual) -->
+    <section id="contact" class="py-20 bg-[#0f0f0f]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-center">
+                    ENTRE EM <span class="text-[#00bcd4]">CONTATO</span>
+                </h2>
+                <p class="text-gray-400 max-w-3xl mx-auto">
+                    Pronto para começar sua jornada no Jiu-Jitsu? Entre em contato conosco e agende sua aula experimental gratuita!
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-center lg:text-left">Fale Conosco</h3>
+                        <div class="space-y-6">
+                            <div class="bg-[#1a1a1a] p-6 rounded-xl border border-[#2a2a2a]">
+                                <label class="block text-sm font-semibold mb-2 text-center lg:text-left">Selecione o CT</label>
+                                <select id="ct-select" class="w-full bg-[#0f0f0f] border border-[#2a2a2a] rounded-lg px-4 py-3 focus:border-[#00bcd4] focus:outline-none transition">
+                                    <option value="">Escolha uma unidade</option>
+                                    <option value="muribeca">CT Muribeca</option>
+                                    <option value="olinda">CT Olinda</option>
+                                    <option value="prazeres">CT Prazeres</option>
+                                </select>
+                            </div>
+                            <div id="ct-info" class="space-y-4 hidden">
+                                <div class="flex items-start gap-4 bg-[#1a1a1a] p-6 rounded-xl border border-[#2a2a2a] hover:border-[#00bcd4] transition">
+                                    <div class="bg-[#00bcd4]/10 p-3 rounded-full">
+                                        <i data-lucide="phone" class="text-[#00bcd4]"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">Telefone</h4>
+                                        <p id="ct-phone" class="text-gray-400"></p>
+                                        <a href="#" id="ct-phone-link" class="text-[#00bcd4] text-sm hover:underline">Ligar agora</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4 bg-[#1a1a1a] p-6 rounded-xl border border-[#2a2a2a] hover:border-[#00bcd4] transition">
+                                    <div class="bg-[#00bcd4]/10 p-3 rounded-full">
+                                        <i data-lucide="mail" class="text-[#00bcd4]"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">E-mail</h4>
+                                        <p id="ct-email" class="text-gray-400"></p>
+                                        <a href="#" id="ct-email-link" class="text-[#00bcd4] text-sm hover:underline">Enviar e-mail</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4 bg-[#1a1a1a] p-6 rounded-xl border border-[#2a2a2a] hover:border-[#00bcd4] transition">
+                                    <div class="bg-[#00bcd4]/10 p-3 rounded-full">
+                                        <i data-lucide="clock" class="text-[#00bcd4]"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">Horários</h4>
+                                        <p id="ct-hours" class="text-gray-400"></p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-[#1a1a1a] p-4 rounded-xl border border-[#2a2a2a]">
+                                    <h4 class="font-bold mb-3 text-center">Localização</h4>
+                                    <div id="ct-map" class="h-48 rounded-lg overflow-hidden relative">
+                                        <iframe id="ct-map-iframe" class="w-full h-full" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                    </div>
+                                    <div class="mt-3">
+                                        <p id="ct-address" class="text-gray-400 text-sm"></p>
+                                        <a href="#" id="ct-map-link" target="_blank" class="text-[#00bcd4] text-sm hover:underline">Ver no Google Maps</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] p-8 rounded-2xl border border-[#2a2a2a]">
+                        <h3 class="text-xl font-bold mb-4 text-center lg:text-left">Horários de Funcionamento</h3>
+                        <div class="space-y-2 text-gray-400">
+                            <div class="flex justify-between">
+                                <span>Segunda - Sexta:</span>
+                                <span class="text-[#00bcd4]">06:00 - 22:00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Sábado:</span>
+                                <span class="text-[#00bcd4]">08:00 - 14:00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Domingo:</span>
+                                <span class="text-gray-500">Fechado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-[#1a1a1a] p-8 rounded-2xl border border-[#2a2a2a]">
+                    <h3 class="text-2xl font-bold mb-6 text-center lg:text-left">Envie uma Mensagem</h3>
+
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Nome Completo</label>
+                            <input
+                                type="text"
+                                required
+                                class="w-full bg-[#0f0f0f] border border-[#2a2a2a] rounded-lg px-4 py-3 focus:border-[#00bcd4] focus:outline-none transition"
+                                placeholder="Seu nome"
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">E-mail</label>
+                            <input
+                                type="email"
+                                required
+                                class="w-full bg-[#0f0f0f] border border-[#2a2a2a] rounded-lg px-4 py-3 focus:border-[#00bcd4] focus:outline-none transition"
+                                placeholder="seu@email.com"
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Telefone</label>
+                            <input
+                                type="tel"
+                                required
+                                class="w-full bg-[#0f0f0f] border border-[#2a2a2a] rounded-lg px-4 py-3 focus:border-[#00bcd4] focus:outline-none transition"
+                                placeholder="(11) 99999-9999"
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Mensagem</label>
+                            <textarea
+                                required
+                                rows="4"
+                                class="w-full bg-[#0f0f0f] border border-[#2a2a2a] rounded-lg px-4 py-3 focus:border-[#00bcd4] focus:outline-none transition resize-none"
+                                placeholder="Conte-nos sobre seu interesse..."
+                            ></textarea>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="w-full bg-[#00bcd4] text-black py-4 rounded-full hover:bg-[#00acc1] transition font-bold flex items-center justify-center gap-2"
+                        >
+                            <i data-lucide="send" size="20"></i>
+                            Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (mantido igual) -->
+    <footer class="bg-[#0a0a0a] border-t border-[#2a2a2a]">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div class="text-center md:text-left">
+                    <div class="flex items-center space-x-3 mb-4 justify-center md:justify-start">
+                        <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433543301427888231/Screenshot_9.png.png?ex=690512bd&is=6903c13d&hm=ba663c6f660468c8c777f819e80b4b45a7543b3a06fbfaecc5716d9d971ddd21&" alt="AlcaTeam" class="h-12 w-12">
+                        <span class="text-xl font-bold text-[#00bcd4]">ALCATEAM</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Bem-vindo à AlcaTeam, onde a irmandade e a excelência no Jiu-Jitsu transformam sua jornada.
+                    </p>
+                    <div class="flex gap-4 justify-center md:justify-start">
+                        <a
+                            href="#"
+                            class="bg-[#1a1a1a] p-3 rounded-full hover:bg-[#00bcd4] hover:text-black transition"
+                        >
+                            <img src="https://static.vecteezy.com/system/resources/previews/018/930/476/original/facebook-logo-facebook-icon-transparent-free-png.png" alt="Facebook" class="w-5 h-5">
+                        </a>
+                        <a
+                            href="#"
+                            class="bg-[#1a1a1a] p-3 rounded-full hover:bg-[#00bcd4] hover:text-black transition"
+                        >
+                            <img src="https://png.pngtree.com/png-clipart/20180626/ourmid/pngtree-instagram-icon-instagram-logo-png-image_3584853.png" alt="Instagram" class="w-5 h-5">
+                        </a>
+                        <a
+                            href="#"
+                            class="bg-[#1a1a1a] p-3 rounded-full hover:bg-[#00bcd4] hover:text-black transition"
+                        >
+                            <img src="https://static.vecteezy.com/system/resources/previews/018/930/572/original/youtube-logo-youtube-icon-transparent-free-png.png" alt="YouTube" class="w-5 h-5">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="text-center md:text-left">
+                    <h3 class="text-lg font-bold mb-4">Acesso Rápido</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#home" class="text-gray-400 hover:text-[#00bcd4] transition">
+                                Página Principal
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#about" class="text-gray-400 hover:text-[#00bcd4] transition">
+                                Nossa História
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#modalities" class="text-gray-400 hover:text-[#00bcd4] transition">
+                                Modalidades
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#contact" class="text-gray-400 hover:text-[#00bcd4] transition">
+                                Contato
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="text-center md:text-left">
+                    <h3 class="text-lg font-bold mb-4">Modalidades</h3>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li>Jiu Jitsu Feminino</li>
+                        <li>Defesa Pessoal</li>
+                        <li>Jiu Jitsu Kids</li>
+                        <li>Iniciantes</li>
+                        <li>Competição</li>
+                    </ul>
+                </div>
+
+                <div class="text-center md:text-left">
+                    <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4 text-sm">
+                        Faça um cadastro e fique por dentro de todos os eventos e novidades.
+                    </p>
+                    <form class="flex gap-2">
+                        <input
+                            type="email"
+                            placeholder="Seu e-mail"
+                            class="flex-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-lg px-4 py-2 text-sm focus:border-[#00bcd4] focus:outline-none transition"
+                        >
+                        <button
+                            type="submit"
+                            class="bg-[#00bcd4] text-black px-4 py-2 rounded-lg hover:bg-[#00acc1] transition font-semibold"
+                        >
+                            →
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-[#2a2a2a] pt-8">
+                <div class="text-center text-gray-400 text-sm">
+                    <p>
+                        Copyright © 2025 AlcaTeam Jiu Jitsu - Todos os direitos reservados.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar ícones Lucide
+        lucide.createIcons();
+        
+        // Menu mobile toggle - App style
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = this.querySelector('i');
+            
+            menu.classList.toggle('hidden');
+            
+            if (menu.classList.contains('hidden')) {
+                icon.setAttribute('data-lucide', 'menu');
+                document.querySelector('.bg-\[\#00bcd4\]').classList.remove('rotate-45');
+            } else {
+                icon.setAttribute('data-lucide', 'plus');
+                document.querySelector('.bg-\[\#00bcd4\]').classList.add('rotate-45');
+            }
+            
+            lucide.createIcons();
+        });
+
+        // CT Selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctSelect = document.getElementById('ct-select');
+            const ctInfo = document.getElementById('ct-info');
+            const ctPhone = document.getElementById('ct-phone');
+            const ctEmail = document.getElementById('ct-email');
+            const ctAddress = document.getElementById('ct-address');
+            const ctData = {
+                muribeca: {
+                    phone: '(81) 99999-9999',
+                    email: 'muribeca@alcateam.com',
+                    address: 'Rua Três, Muribeca, Jaboatão dos Guararapes - PE - CEP 54350040',
+                    map: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.123456789012!2d-34.987654321!3d-8.123456789012345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDcnMjQuNCJTIDM0wrA1OScxNS42Ilc!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr',
+                    hours: 'Seg-Sex: 06:00 - 22:00\nSáb: 08:00 - 14:00\nDom: Fechado'
+                },
+                olinda: {
+                    phone: '(81) 98888-8888',
+                    email: 'olinda@alcateam.com',
+                    address: 'Av. Carlos de Lima Cavalcante, 4258 - Rio Doce, Olinda - PE, 53040-125',
+                    map: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.987654321098!2d-34.87654321!3d-8.012345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDAnNDQuNCJTIDM0wrA1MiczOC42Ilc!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr',
+                    hours: 'Seg-Sex: 07:00 - 21:00\nSáb: 09:00 - 13:00\nDom: Fechado'
+                },
+                prazeres: {
+                    phone: '(81) 97777-7777',
+                    email: 'prazeres@alcateam.com',
+                    address: 'R. da Prata, 529 - Guararapes, Jaboatão dos Guararapes - PE, 54330-265',
+                    map: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.567890123456!2d-34.7654321!3d-8.056789012345678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDMnMjQuNCJTIDM0wrA0NSc1OC42Ilc!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr',
+                    hours: 'Seg-Sex: 05:00 - 23:00\nSáb: 07:00 - 15:00\nDom: Fechado'
+                }
+            };
+            
+            ctSelect.addEventListener('change', function() {
+                if (this.value) {
+                    const data = ctData[this.value];
+                    ctPhone.textContent = data.phone;
+                    ctEmail.textContent = data.email;
+                    ctAddress.textContent = data.address;
+                    document.getElementById('ct-hours').textContent = data.hours.replace(/\n/g, '\n');
+                    
+                    // Update links and map
+                    document.getElementById('ct-phone-link').href = `tel:${data.phone.replace(/\D/g, '')}`;
+                    document.getElementById('ct-email-link').href = `mailto:${data.email}`;
+                    document.getElementById('ct-map-link').href = data.map.replace('embed', 'maps');
+                    document.getElementById('ct-map-iframe').src = data.map;
+                    
+                    ctInfo.style.display = 'block';
+                } else {
+                    ctInfo.style.display = 'none';
+                    document.getElementById('ct-map-iframe').src = '';
+                }
+            });
+            
+            // Initialize form submission
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const selectedCT = ctSelect.value;
+                if (!selectedCT) {
+                    alert('Por favor, selecione uma unidade antes de enviar.');
+                    return;
+                }
+                alert(`Mensagem enviada com sucesso para o ${ctSelect.options[ctSelect.selectedIndex].text}! Entraremos em contato em breve.`);
+                this.reset();
+                ctInfo.style.display = 'none';
+                ctSelect.value = '';
+            });
+        });
+    </script>
+</body>
+</html>
