@@ -27,7 +27,7 @@
             display: none;
         }
         
-        /* Estilos do carrossel igual ao Aluga.ae */
+        /* Estilos do carrossel no estilo Aluga.ae */
         .scroll-container {
             scrollbar-width: thin;
             scrollbar-color: #00bcd4 #1a1a1a;
@@ -53,16 +53,37 @@
         }
 
         .modality-card {
+            transition: all 0.3s ease;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
             flex: 0 0 auto;
             width: 320px;
             margin-right: 20px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .modality-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 188, 212, 0.2);
+            border-color: #00bcd4;
         }
 
         .instructor-card {
+            transition: all 0.3s ease;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
             flex: 0 0 auto;
-            width: 100%;
-            max-width: 400px;
+            width: 320px;
             margin-right: 20px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .instructor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 188, 212, 0.2);
+            border-color: #00bcd4;
         }
 
         @media (max-width: 767px) {
@@ -79,6 +100,7 @@
                 scroll-snap-align: start;
                 min-width: 85%;
                 margin-right: 15px;
+                flex: 0 0 auto;
             }
             
             .modality-card:last-child {
@@ -89,6 +111,7 @@
                 scroll-snap-align: start;
                 min-width: 85%;
                 margin-right: 15px;
+                flex: 0 0 auto;
             }
             
             .instructor-card:last-child {
@@ -117,7 +140,7 @@
     </style>
 </head>
 <body class="bg-[#0a0a0a] text-white">
-    <!-- Header (mantido igual) -->
+    <!-- Header -->
     <header class="fixed top-0 w-full bg-[#0a0a0a]/95 backdrop-blur-sm z-50 border-b border-[#00bcd4]/20">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
@@ -162,7 +185,7 @@
         </nav>
     </header>
 
-    <!-- Hero Section (mantido igual) -->
+    <!-- Hero Section -->
     <section id="home" class="relative min-h-screen flex items-center justify-center pt-20">
         <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#1a1a1a] to-[#0a0a0a]">
             <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433557865439826050/Gemini_Generated_Image_vpb6s2vpb6s2vpb6.png?ex=6905204d&is=6903cecd&hm=278ed6d52d6c3ca311a8ea5904799b7e7af63d4e59e5c83162cfc6faffa74676&" alt="Jiu-Jitsu Background" class="w-full h-full object-cover opacity-20">
@@ -208,7 +231,7 @@
         </div>
     </section>
 
-    <!-- Benefits Section (mantido igual) -->
+    <!-- Benefits Section -->
     <section class="py-20 bg-[#0f0f0f]">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
@@ -275,7 +298,7 @@
         </div>
     </section>
 
-    <!-- About Section (mantido igual) -->
+    <!-- About Section -->
     <section id="about" class="py-20 bg-[#0a0a0a]">
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -332,10 +355,10 @@
         </div>
     </section>
 
-    <!-- Modalities Section - COM CARROSSEL ATUALIZADO -->
+    <!-- Modalities Section - CARROSSEL ESTILO ALUGA.AE -->
     <section id="modalities" class="py-20 bg-[#0f0f0f]">
         <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
+            <div class="text-center mb-12">
                 <h2 class="text-4xl md:text-5xl font-bold mb-6 text-center">
                     EXPLORE NOSSAS <span class="text-[#00bcd4]">MODALIDADES</span>
                 </h2>
@@ -347,49 +370,61 @@
             <div class="relative">
                 <div class="scroll-container">
                     <!-- Card 1 - Jiu Jitsu Feminino -->
-                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 modality-card">
-                        <div class="absolute inset-0 overflow-hidden">
-                            <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433891652715544716/dsad.png?ex=6906572a&is=690505aa&hm=53da2a40c46ec5741832900ea0917900a78057a29ba563600c9c90e8bf616a65&" alt="Jiu Jitsu Feminino" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                        <div class="p-6 absolute bottom-0 left-0 right-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">Jiu Jitsu Feminino</span>
-                            <h3 class="text-xl font-bold mb-2">Jiu Jitsu Para Mulheres</h3>
-                            <p class="text-gray-300 mb-4 text-sm">Treinamento focado na autoconfiança e defesa pessoal</p>
-                            <a href="#contact" class="inline-flex items-center text-[#00bcd4] font-semibold text-sm hover:gap-2 transition-all">
-                                Saiba Mais <span class="ml-1 group-hover:ml-2 transition-all">→</span>
+                    <div class="modality-card bg-[#1a1a1a]">
+                        <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433891652715544716/dsad.png?ex=6906572a&is=690505aa&hm=53da2a40c46ec5741832900ea0917900a78057a29ba563600c9c90e8bf616a65&" alt="Jiu Jitsu Feminino" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold">Jiu Jitsu Feminino</h3>
+                                <span class="bg-[#00bcd4] text-black rounded-full px-3 py-1 text-sm font-semibold">Para Mulheres</span>
+                            </div>
+                            <p class="text-gray-400 mb-4">Treinamento focado na autoconfiança e defesa pessoal para mulheres de todas as idades.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Autoconfiança</span>
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Defesa Pessoal</span>
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Todas as Idades</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-[#00bcd4] text-black text-center py-2 rounded-full font-medium hover:bg-[#00acc1] transition">
+                                Saiba Mais
                             </a>
                         </div>
                     </div>
 
                     <!-- Card 2 - Defesa Pessoal -->
-                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 modality-card">
-                        <div class="absolute inset-0 overflow-hidden">
-                            <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433891805526495283/Test.png?ex=6906574e&is=690505ce&hm=39c66f484f38aa5e764c7fbafc93948c2ef78c7b62944062514d47fadab3cde2&" alt="Defesa Pessoal" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                        <div class="p-6 absolute bottom-0 left-0 right-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">Defesa Pessoal</span>
-                            <h3 class="text-xl font-bold mb-2">Jiu Jitsu Defesa</h3>
-                            <p class="text-gray-300 mb-4 text-sm">Técnicas de defesa pessoal especialmente para mulheres</p>
-                            <a href="#contact" class="inline-flex items-center text-[#00bcd4] font-semibold text-sm hover:gap-2 transition-all">
-                                Saiba Mais <span class="ml-1 group-hover:ml-2 transition-all">→</span>
+                    <div class="modality-card bg-[#1a1a1a]">
+                        <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433891805526495283/Test.png?ex=6906574e&is=690505ce&hm=39c66f484f38aa5e764c7fbafc93948c2ef78c7b62944062514d47fadab3cde2&" alt="Defesa Pessoal" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold">Defesa Pessoal</h3>
+                                <span class="bg-[#00bcd4] text-black rounded-full px-3 py-1 text-sm font-semibold">Especial</span>
+                            </div>
+                            <p class="text-gray-400 mb-4">Técnicas de defesa pessoal especialmente desenvolvidas para situações do cotidiano.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Técnicas Práticas</span>
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Situações Reais</span>
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Segurança</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-[#00bcd4] text-black text-center py-2 rounded-full font-medium hover:bg-[#00acc1] transition">
+                                Saiba Mais
                             </a>
                         </div>
                     </div>
 
                     <!-- Card 3 - Jiu Jitsu Kids -->
-                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 hover:transform hover:-translate-y-2 modality-card">
-                        <div class="absolute inset-0 overflow-hidden">
-                            <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433892024012247081/Kids.png?ex=69065782&is=69050602&hm=dc4dc95e8023b8705c7acd0d42ffba04383636e4c1a44d7c84f5159db8edecd1&" alt="Jiu Jitsu Kids" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:opacity-100 opacity-0 transition-opacity duration-300"></div>
-                        <div class="p-6 absolute bottom-0 left-0 right-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">Jiu Jitsu Kids</span>
-                            <h3 class="text-xl font-bold mb-2">Para Crianças</h3>
-                            <p class="text-gray-300 mb-4 text-sm">Aulas divertidas e educativas para crianças</p>
-                            <a href="#contact" class="inline-flex items-center text-[#00bcd4] font-semibold text-sm hover:gap-2 transition-all">
-                                Saiba Mais <span class="ml-1 group-hover:ml-2 transition-all">→</span>
+                    <div class="modality-card bg-[#1a1a1a]">
+                        <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433892024012247081/Kids.png?ex=69065782&is=69050602&hm=dc4dc95e8023b8705c7acd0d42ffba04383636e4c1a44d7c84f5159db8edecd1&" alt="Jiu Jitsu Kids" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold">Jiu Jitsu Kids</h3>
+                                <span class="bg-[#00bcd4] text-black rounded-full px-3 py-1 text-sm font-semibold">3-12 anos</span>
+                            </div>
+                            <p class="text-gray-400 mb-4">Aulas divertidas e educativas para crianças, desenvolvendo disciplina e coordenação.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Diversão</span>
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Disciplina</span>
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Desenvolvimento</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-[#00bcd4] text-black text-center py-2 rounded-full font-medium hover:bg-[#00acc1] transition">
+                                Saiba Mais
                             </a>
                         </div>
                     </div>
@@ -398,7 +433,7 @@
         </div>
     </section>
 
-    <!-- Instructors Section - COM CARROSSEL ATUALIZADO -->
+    <!-- Instructors Section - CARROSSEL ESTILO ALUGA.AE -->
     <section id="instructors" class="py-20 bg-[#0a0a0a]">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
@@ -413,68 +448,59 @@
             <div class="relative">
                 <div class="scroll-container">
                     <!-- Muribeca -->
-                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 instructor-card">
-                        <div class="aspect-[3/4] overflow-hidden">
-                            <img
-                                src="https://cdn.discordapp.com/attachments/1398335670178545847/1433892280875352104/Professor_Muribeca.jpeg?ex=690657c0&is=69050640&hm=b0132bae351618b593ad7d455657e3d4c5642b9423e6974558a644f93b95178b&"
-                                alt="CT Muribeca"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            >
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-300"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">
-                                CT Muribeca
-                            </span>
-                            <h3 class="text-2xl font-bold mb-2">
-                                Professor Hugo
-                            </h3>
-                            <p class="text-gray-300 text-sm">Faixa Roxa 3° Grau</p>
-                            <div class="h-1 w-16 bg-[#00bcd4] rounded-full"></div>
+                    <div class="instructor-card bg-[#1a1a1a]">
+                        <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433892280875352104/Professor_Muribeca.jpeg?ex=690657c0&is=69050640&hm=b0132bae351618b593ad7d455657e3d4c5642b9423e6974558a644f93b95178b&" alt="CT Muribeca" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold">Professor Hugo</h3>
+                                <span class="bg-[#00bcd4] text-black rounded-full px-3 py-1 text-sm font-semibold">Faixa Roxa</span>
+                            </div>
+                            <p class="text-gray-400 mb-4">Instrutor dedicado com anos de experiência no ensino do Jiu-Jitsu para todas as idades.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">CT Muribeca</span>
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">3° Grau</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-[#00bcd4] text-black text-center py-2 rounded-full font-medium hover:bg-[#00acc1] transition">
+                                Conhecer Mais
+                            </a>
                         </div>
                     </div>
 
                     <!-- Olinda -->
-                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 instructor-card">
-                        <div class="aspect-[3/4] overflow-hidden">
-                            <img
-                                src="https://cdn.discordapp.com/attachments/1398335670178545847/1433893212371554455/Rodrigo.jfif?ex=6906589e&is=6905071e&hm=24f950f8b766c075e82f528b6df0388bb18907912a2c8fc0c5caabe721848339&"
-                                alt="CT Olinda"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            >
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-300"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">
-                                CT Olinda
-                            </span>
-                            <h3 class="text-2xl font-bold mb-2">
-                                Professor Rodrigo
-                            </h3>
-                            <p class="text-gray-300 text-sm">Faixa Preta</p>
-                            <div class="h-1 w-16 bg-[#00bcd4] rounded-full"></div>
+                    <div class="instructor-card bg-[#1a1a1a]">
+                        <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433893212371554455/Rodrigo.jfif?ex=6906589e&is=6905071e&hm=24f950f8b766c075e82f528b6df0388bb18907912a2c8fc0c5caabe721848339&" alt="CT Olinda" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold">Professor Rodrigo</h3>
+                                <span class="bg-[#00bcd4] text-black rounded-full px-3 py-1 text-sm font-semibold">Faixa Preta</span>
+                            </div>
+                            <p class="text-gray-400 mb-4">Faixa preta com vasta experiência em competições e formação de novos atletas.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">CT Olinda</span>
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Competidor</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-[#00bcd4] text-black text-center py-2 rounded-full font-medium hover:bg-[#00acc1] transition">
+                                Conhecer Mais
+                            </a>
                         </div>
                     </div>
 
                     <!-- Prazeres -->
-                    <div class="group relative overflow-hidden rounded-2xl border border-[#2a2a2a] hover:border-[#00bcd4] transition-all duration-300 instructor-card">
-                        <div class="aspect-[3/4] overflow-hidden">
-                            <img
-                                src="https://cdn.discordapp.com/attachments/1398335670178545847/1433892539307655178/Professor_Prazeres.jfif?ex=690657fd&is=6905067d&hm=6f00f836c6181ff2ba044d862649770c06c12bdba4c5cbd4b245d709c72d791a&"
-                                alt="CT Prazeres"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            >
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-300"></div>
-                        <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            <span class="text-[#00bcd4] text-sm font-semibold mb-1 block">
-                                CT Prazeres
-                            </span>
-                            <h3 class="text-2xl font-bold mb-2">
-                                Professor Junior
-                            </h3>
-                            <p class="text-gray-300 text-sm">Faixa Preta</p>
-                            <div class="h-1 w-16 bg-[#00bcd4] rounded-full"></div>
+                    <div class="instructor-card bg-[#1a1a1a]">
+                        <img src="https://cdn.discordapp.com/attachments/1398335670178545847/1433892539307655178/Professor_Prazeres.jfif?ex=690657fd&is=6905067d&hm=6f00f836c6181ff2ba044d862649770c06c12bdba4c5cbd4b245d709c72d791a&" alt="CT Prazeres" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold">Professor Junior</h3>
+                                <span class="bg-[#00bcd4] text-black rounded-full px-3 py-1 text-sm font-semibold">Faixa Preta</span>
+                            </div>
+                            <p class="text-gray-400 mb-4">Especialista em técnicas avançadas e formação de atletas de competição.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">CT Prazeres</span>
+                                <span class="bg-[#00bcd4]/20 text-[#00bcd4] rounded-full px-3 py-1 text-xs">Técnicas Avançadas</span>
+                            </div>
+                            <a href="#contact" class="block w-full bg-[#00bcd4] text-black text-center py-2 rounded-full font-medium hover:bg-[#00acc1] transition">
+                                Conhecer Mais
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -505,7 +531,7 @@
         </div>
     </section>
 
-    <!-- Contact Section (mantido igual) -->
+    <!-- Contact Section -->
     <section id="contact" class="py-20 bg-[#0f0f0f]">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
@@ -653,7 +679,7 @@
         </div>
     </section>
 
-    <!-- Footer (mantido igual) -->
+    <!-- Footer -->
     <footer class="bg-[#0a0a0a] border-t border-[#2a2a2a]">
         <div class="container mx-auto px-6 py-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -758,7 +784,6 @@
     <script>
         // Inicializar ícones Lucide
         lucide.createIcons();
-        
         // Menu mobile toggle - App style
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
